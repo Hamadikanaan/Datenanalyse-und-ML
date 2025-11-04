@@ -29,7 +29,15 @@ df["BMI"] = df["Gewicht"] / (df["Größe"] / 100)**2
 print("\nDataFrame (d) - mit BMI")
 print(df)
 
-# Aufgabenteil e)
+# Aufgabenteil e) Nach BMI absteigend sortieren
+df_sorted_bmi = df.sort_values(by='BMI', ascending=False)
+
+print("\nDataFrame (e)  -- sort von BMI")
+print(df_sorted_bmi)
+
+
+
+# Aufgabenteil f)
 untergewicht_mit_e = df[(bmi < 20) & (df.index.str.contains("e"))]
-print("\nDataFrame (e) - BMI unter 20 und Name mit e:")
+print("\nDataFrame f - BMI unter 20 und Name mit e:")
 print(untergewicht_mit_e)
