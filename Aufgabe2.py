@@ -1,35 +1,32 @@
-import pandas as pd
+import matplotlib.pyplot as plt
 
-# Aufgabenteil a)
-personendaten = {
-    "Gewicht": [65, 58, 58, 45, 43, 99, 68, 60],
-    "Größe": [179, 165, 172, 154, 150, 189, 176, 175]
-}
+# ---- Teil a Säulendiagramm ------
+countries = ["Asien", "Afrika", "N-Amerika", "S-Amerika", "Antarktis", "Europa", "Australien"]
+country_sizes = [44.4, 30.3, 24.9, 17.8, 13.2, 10.5, 8.5]
 
-# Index setzen (ersetzt den generierten Index)
-index = ["Henry", "Sarah", "Elke", "Lulu", "Vera", "Toni", "Maria", "Chris"]
+# Säulendiagramm zeichnen
+plt.figure(figsize=(8, 6))
+plt.bar(countries, country_sizes, color="green", edgecolor="black")
 
-df = pd.DataFrame(personendaten, index=index)
-print("DataFrame (a):")
-print(df)
+# Beschriftung
+plt.xlabel("Kontinente")
+plt.ylabel("Größe in Mio. km2")
+plt.title("a) Flächen der Kontinente (Säulendiagramm)")
+plt.grid(axis="y", linestyle="--")
 
-# Aufgabenteil b)
-bmi = df["Gewicht"] / (df["Größe"] / 100)**2
-normalgewicht = df[(bmi >= 18.5) & (bmi <= 25)]
-print("\nDataFrane (b) - Normalgewicht:")
-print(normalgewicht)
+#Diagramm anzeigen
+plt.show()
 
-# Aufgabenteil c)
-namen_mit_e = df[df.index.str.contains("e")]
-print("\nDataFrame (c) - Namen mit e enthalten:")
-print(namen_mit_e)
+# === Teil b: Tortendiagramm ===
+total_earth = 510.0
+land_total = sum(country_sizes)
+water = total_earth - land_total
 
-# Aufgabenteil d)
-df["BMI"] = df["Gewicht"] / (df["Größe"] / 100)**2
-print("\nDataFrame (d) - mit BMI")
-print(df)
+labels = countries + ["Wasser"]
+values = country_sizes + [water]
+colors = ["yellow", "brown", "purple", "orange", "cyan", "red", "green", "blue"]
 
-# Aufgabenteil e)
-untergewicht_mit_e = df[(bmi <= 20) & (df.index.str.contains("e"))]
-print("\nDataFrame (e) - BMI unter 20 und Name mit e:")
-print(untergewicht_mit_e)
+plt.figure(figsize=(6, 6))
+plt.pie(values, labels=labels, autopct="%1.1f%%", startangle=90, colors=colors)
+plt.title("b) Verteilung der Erdoberfläche (Kontinente & Wasser)")
+plt.show()
