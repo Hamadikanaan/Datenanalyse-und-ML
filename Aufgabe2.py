@@ -30,6 +30,6 @@ print("\nDataFrame (d) - mit BMI")
 print(df)
 
 # Aufgabenteil e)
-untergewicht_mit_e = df[(bmi <= 20) & (df.index.str.contains("e"))]
+untergewicht_mit_e = df[(bmi < 20) & (df.index.str.contains("e"))]
 print("\nDataFrame (e) - BMI unter 20 und Name mit e:")
 print(untergewicht_mit_e)
