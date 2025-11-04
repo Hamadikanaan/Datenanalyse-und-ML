@@ -19,3 +19,4 @@ plt.grid(True)
 
 # Diagramm anzeigen
 plt.show()
+
