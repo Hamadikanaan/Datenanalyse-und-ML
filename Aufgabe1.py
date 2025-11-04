@@ -1,22 +1,24 @@
-import matplotlib.pyplot as plt
+import pandas as pd
 
-# Beispiel-Daten
-monate = ["Jan", "Feb", "Mae", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
-temperatur_deutschland = [1.5, 6.6, 7.5, 10.1, 15.1, 16.8, 18.8, 19.9, 15.4, 11.0, 5.1, 3.0]
-temperatur_australien = [27, 26, 23, 19, 15, 11, 11, 12, 15, 19, 22, 25]
+df = pd.DataFrame(
+    {
+        "country": ["Österreich", "Deutschland", "Schweiz"],
+        "area": [414.6, 891.85, 87.88],
+        "population": [1805681, 3562166, 378884],
+    },
+    index=["Wien", "Berlin", "Zürich"]
+)
 
+s = df.stack()
+print(s)
 
-# Diagramm erstellen
-plt.plot(monate, temperatur_deutschland, label="Deutschland", color="blue", marker="")
-plt.plot(monate, temperatur_australien, label="Australien", color="red", marker="")
+# Aufgabenteil b)
+print("\nAlphabetisch sortiert.")
+s_sorted = s.sort_index()
+print(s_sorted)
 
-
-plt.xlabel("Monate")
-plt.ylabel("Temperatur in Grad °C")
-plt.title("durchschnitlliche Monatstemperaturen")
-plt.legend()
-plt.grid(True)
-
-# Diagramm anzeigen
-plt.show()
-
+# Aufgabenteil c)
+print("\nVertauschte Indizes")
+s_swapped = s.swaplevel()
+s_swapped = s_swapped.sort_index()
+print(s_swapped)
