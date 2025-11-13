@@ -1,27 +1,36 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import random
 
-# Teil 3a)
-subjects = ["Mathe 3", "Grundlagen der KI", "Datenanalyse und ML", "Compilerbau", "Softwaretechnik", "Wissentschaft & technisches Arbeiten"]
-grades = []
-for subject in subjects:
-    grades.append(random.randint(1, 5))
+# ---------------------------------------------
+# Aufgabe 3a: Arbeitstage (Business Days)
+# ---------------------------------------------
 
-# Teil 3b)
-grades2 = []
-for subject in subjects:
-    grades2.append(random.randint(1, 5))
+# Alle Arbeitstage zwischen 24.12.2025 und 06.01.2026
+dates = pd.date_range("2025-12-24", "2026-01-06", freq="B")
+print(dates)
 
+# Anzahl der Arbeitstage ausgeben
+print("Es gibt", len(dates),
+      "normale Wochentage/reguläre Arbeitstage in den weihnachtensferien 2025/2026.")
 
-grade_series = pd.Series(grades, index=subjects, name="Notenübersicht 1. Halbjahr")
-print("Series 1 Ausgabe für Aufgabe 3a)")
-print(grade_series)
-grade_series2 = pd.Series(grades2, index=subjects, name="Notenübersicht 2. Halbjahr")
-print("\nSeries 2 Ausgabe für Aufgabe 3b)")
-print(grade_series2)
+print("\n\n")
 
-average_grade = (grade_series + grade_series2) / 2
+# ---------------------------------------------
+# Aufgabe 3b: Sonntage, die auf den 1. fallen
+# ---------------------------------------------
 
-print("\nDurchschnitt aller Fächer:\n", average_grade)
+# Alle Tage zwischen 24.12.2025 und 06.01.2027
+all_dates = pd.date_range("2025-12-24", "2027-01-06")
 
+# Filter: Sonntag (dayofweek == 6) UND Tag == 1
+# .to_series().dt -> vermeidet rote Fehlerlinien in VS Code
+sundays_first = all_dates[
+    (all_dates.to_series().dt.dayofweek == 6) &
+    (all_dates.to_series().dt.day == 1)
+]
+
+# Gefundene Sonntage anzeigen
+print(sundays_first)
+
+# Anzahl anzeigen
+print("Vom 24.12.2025 bis zum 6.01.2027 gibt es", len(sundays_first),
+      "Sonntage, die auf den 1. des Monats fallen.")

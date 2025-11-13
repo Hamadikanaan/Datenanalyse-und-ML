@@ -1,22 +1,20 @@
-import matplotlib.pyplot as plt
+import pandas as pd
 
-# Beispiel-Daten
-monate = ["Jan", "Feb", "Mae", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
-temperatur_deutschland = [1.5, 6.6, 7.5, 10.1, 15.1, 16.8, 18.8, 19.9, 15.4, 11.0, 5.1, 3.0]
-temperatur_australien = [27, 26, 23, 19, 15, 11, 11, 12, 15, 19, 22, 25]
+rows = []  # Liste für (Land, Bevölkerung)
 
+with open(r"C:\Users\Hamadi\OneDrive\Desktop\IFM5\ML\aufgabe3\countries_population.csv", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()      # Zeile reinigen
+        if not line:
+            continue             # Leere Zeilen überspringen
 
-# Diagramm erstellen
-plt.plot(monate, temperatur_deutschland, label="Deutschland", color="blue", marker="")
-plt.plot(monate, temperatur_australien, label="Australien", color="red", marker="")
+        parts = line.rsplit(" ", 1)  # Von hinten in Land + Zahl trennen
 
+        country = parts[0].strip().strip("'")      # Landname ohne '
+        population = parts[1].replace(",", "").strip()  # Kommas entfernen
 
-plt.xlabel("Monate")
-plt.ylabel("Temperatur in Grad °C")
-plt.title("durchschnitlliche Monatstemperaturen")
-plt.legend()
-plt.grid(True)
+        rows.append((country, int(population)))    # Tupel speichern
 
-# Diagramm anzeigen
-plt.show()
+df = pd.DataFrame(rows, columns=["Country", "Population"])  # DataFrame bauen
 
+print(df.head(5).to_string(index=False))  # Erste 5 Zeilen ohne Index anzeigen
