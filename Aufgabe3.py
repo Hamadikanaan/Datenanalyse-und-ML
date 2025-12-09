@@ -1,27 +1,25 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import random
 
-# Teil 3a)
-subjects = ["Mathe 3", "Grundlagen der KI", "Datenanalyse und ML", "Compilerbau", "Softwaretechnik", "Wissentschaft & technisches Arbeiten"]
-grades = []
-for subject in subjects:
-    grades.append(random.randint(1, 5))
+# CSV laden und Zeitreihe erstellen
+df = pd.read_csv(r'C:\Users\hamadi.alkanaan.HERFORD\Desktop\mein projekt\git\hs\herford_weather.csv')
+df['time'] = pd.to_datetime(df['time'])
+df.set_index('time', inplace=True)
 
-# Teil 3b)
-grades2 = []
-for subject in subjects:
-    grades2.append(random.randint(1, 5))
+# Zeitraum 1.-3. Juni 2022 filtern
+june = df.loc['2022-06-01':'2022-06-03', 'temperature_2m (°C)']
 
+# Glättung mit rolling (6-Stunden-Fenster)
+june_smooth = june.rolling(window=6).mean()
 
-grade_series = pd.Series(grades, index=subjects, name="Notenübersicht 1. Halbjahr")
-print("Series 1 Ausgabe für Aufgabe 3a)")
-print(grade_series)
-grade_series2 = pd.Series(grades2, index=subjects, name="Notenübersicht 2. Halbjahr")
-print("\nSeries 2 Ausgabe für Aufgabe 3b)")
-print(grade_series2)
+# Zwei Plots nebeneinander
+fig, axes = plt.subplots(1, 2, figsize=(14,5))
 
-average_grade = (grade_series + grade_series2) / 2
+june.plot(ax=axes[0], title='Ohne Glättung')
+axes[0].set_ylabel('Temperatur (°C)')
 
-print("\nDurchschnitt aller Fächer:\n", average_grade)
+june_smooth.plot(ax=axes[1], title='Mit Glättung (rolling 6h)')
+axes[1].set_ylabel('Temperatur (°C)')
 
+plt.tight_layout()
+plt.show()
